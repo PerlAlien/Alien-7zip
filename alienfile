@@ -1,0 +1,29 @@
+use alienfile;
+
+# replace this with your own system probe.
+# See Alien::Build::Plugin::Probe and
+# Alien::Build::Plugin::PkgConfig for common
+# probe plugins.
+plugin 'Probe::CommandLine' => (
+  command => $_,
+  args    => [ '--version' ],
+  match   => qr/([0-9\.]+)/,
+  version => qr/([0-9\.]+)/,
+) for qw( 7z.exe 7zz );
+
+share {
+  start_url 'https://www.7-zip.org/download.html';
+  plugin Download => (
+    filter  => qr/^7z(\d+).*tar\.xz$/,
+    version => qr/([0-9\.]+)/,
+  );
+  plugin Extract => 'tar.xz';
+  build [
+    # NOTE: you will probably need to set a PREFIX and possibly DISTDIR
+    # https://metacpan.org/pod/Alien::Build#prefix1
+    # https://metacpan.org/pod/Alien::Build#destdir
+    '%{make}',
+    '%{make} install',
+  ];
+  plugin 'Gather::IsolateDynamic';
+}
