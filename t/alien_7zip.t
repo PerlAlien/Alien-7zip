@@ -6,7 +6,7 @@ use Alien::7zip;
 alien_diag 'Alien::7zip';
 alien_ok 'Alien::7zip';
 
-run_ok( Alien::7zip->bin_7zip_path )
+run_ok( Alien::7zip->exe )
   ->success
   ->out_like(qr/\Q7-Zip (z) \E([0-9\.]+)/,);
 

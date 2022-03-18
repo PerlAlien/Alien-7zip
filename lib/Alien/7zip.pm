@@ -13,7 +13,7 @@ use File::Which ();
 use constant BIN_NAMES =>
 	[ '7z.exe', '7zz' ];
 
-sub bin_7zip_path {
+sub exe {
 	for my $bin ( @{ BIN_NAMES() } ) {
 		my $which = File::Which::which( $bin );
 		return $which if $which;
