@@ -20,6 +20,25 @@ sub exe {
 	}
 }
 
+=head1 HELPERS
+
+=head2 7z
+
+ %{7z}
+
+Returns '7z', '7zz', or appropriate command for
+platform.
+
+=cut
+
+sub alien_helper {
+  return +{
+    '7z' => sub {
+      Alien::7zip->exe;
+    },
+  };
+}
+
 1;
 
 =head1 NAME
