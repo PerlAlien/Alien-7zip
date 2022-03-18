@@ -35,7 +35,7 @@ share {
   my $output_dir = '_o';
   my $bin_name = '7zz';
   build [
-    [ '%{make}', qw(-j), qw(-C), $build_dir, qw(-f makefile.gcc), "O=$output_dir" ],
+    [ '%{make}', qw(-C), $build_dir, qw(-f makefile.gcc), "O=$output_dir" ],
     sub {
       my ($build) = @_;
       my $prefix = Path::Tiny::path($build->install_prop->{prefix});
