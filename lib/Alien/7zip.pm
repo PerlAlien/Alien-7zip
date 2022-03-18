@@ -4,6 +4,21 @@ use strict;
 use warnings;
 use base qw( Alien::Base );
 use 5.008004;
+use File::Which ();
+
+# NOTE
+# - 7zip provides the '7zz' binary on Unix-likes and the '7z.exe' binary on
+#   Windows.
+# - p7zip is a fork which provides the '7z' binary on Unix-likes.
+use constant BIN_NAMES =>
+	[ '7z.exe', '7zz' ];
+
+sub bin_7zip_path {
+	for my $bin ( @{ BIN_NAMES() } ) {
+		my $which = File::Which::which( $bin );
+		return $which if $which;
+	}
+}
 
 1;
 
@@ -32,6 +47,10 @@ for the use of other modules.
 =head1 SEE ALSO
 
 =over 4
+
+=item L<7-Zip|https://www.7-zip.org/>
+
+The 7-Zip home page.
 
 =item L<Alien>
 

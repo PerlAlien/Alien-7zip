@@ -1,29 +1,49 @@
 use alienfile;
 
-# replace this with your own system probe.
-# See Alien::Build::Plugin::Probe and
-# Alien::Build::Plugin::PkgConfig for common
-# probe plugins.
 plugin 'Probe::CommandLine' => (
   command => $_,
-  args    => [ '--version' ],
-  match   => qr/([0-9\.]+)/,
-  version => qr/([0-9\.]+)/,
+  match   => qr/\Q7-Zip (z) \E([0-9\.]+)/,
+  version => qr/\Q7-Zip (z) \E([0-9\.]+)/,
 ) for qw( 7z.exe 7zz );
 
 share {
+  requires 'Path::Tiny';
+  requires 'File::Copy::Recursive';
+
   start_url 'https://www.7-zip.org/download.html';
+  meta->around_hook(
+    prefer => sub {
+      my $orig = shift;
+      my $build = shift;
+      my $data = $orig->($build, @_);
+
+      for my $item (@{ $data->{list} }) {
+        # insert a dot after the first 2 digits
+        $item->{version} =~ s/^(\d{2})(\d.*)$/$1.$2/;
+      }
+
+      $data;
+    },
+  );
+
   plugin Download => (
-    filter  => qr/^7z(\d+).*tar\.xz$/,
-    version => qr/([0-9\.]+)/,
+    filter  => qr/^7z(\d+).*-src\.tar\.xz$/,
+    version => qr/^7z([0-9\.]+)/,
   );
   plugin Extract => 'tar.xz';
+  my $build_dir = 'CPP/7zip/Bundles/Alone2';
+  my $output_dir = '_o';
+  my $bin_name = '7zz';
   build [
-    # NOTE: you will probably need to set a PREFIX and possibly DISTDIR
-    # https://metacpan.org/pod/Alien::Build#prefix1
-    # https://metacpan.org/pod/Alien::Build#destdir
-    '%{make}',
-    '%{make} install',
+    [ '%{make}', qw(-j), qw(-C), $build_dir, qw(-f makefile.gcc), "O=$output_dir" ],
+    sub {
+      my ($build) = @_;
+      my $prefix = Path::Tiny::path($build->install_prop->{prefix});
+      my $output = Path::Tiny::path($build_dir, $output_dir);
+
+      my $prefix_bin_name = $prefix->child('bin', $bin_name);
+      $prefix_bin_name->parent->mkpath;
+      File::Copy::Recursive::fcopy($output->child($bin_name), $prefix_bin_name);
+    }
   ];
-  plugin 'Gather::IsolateDynamic';
 }
