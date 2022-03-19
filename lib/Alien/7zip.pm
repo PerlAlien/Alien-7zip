@@ -13,6 +13,16 @@ use File::Which ();
 use constant BIN_NAMES =>
 	[ '7z.exe', '7zz' ];
 
+=head1 METHODS
+
+=head2 exe
+
+ Alien::7zip->exe
+
+Returns the command name for running 7-Zip.
+
+=cut
+
 sub exe {
 	for my $bin ( @{ BIN_NAMES() } ) {
 		my $which = File::Which::which( $bin );
