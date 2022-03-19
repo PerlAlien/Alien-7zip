@@ -1,5 +1,11 @@
 use alienfile;
 
+# NOTE: you can set ALIEN_7ZIP_SHARE_PREFER to either:
+#
+# - "auto": try binary install if possible (default)
+# - "source": try source install only
+# - "binary": try binary install only
+
 plugin 'Probe::CommandLine' => (
   command => $_,
   match   => qr/\Q7-Zip (z) \E([0-9\.]+)/,
