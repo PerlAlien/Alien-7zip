@@ -61,6 +61,10 @@ jobs:
         os: [ubuntu-latest]
         perl-version: ['5.8', '5.20', '5.30', '5.34']
         alien-install-type:
+          ## NOTE Current Ubuntu does not have 7zip package.
+          ## Waiting for GitHub Actions to use 'jammy' distribution or backport
+          ## the package.
+          ## <https://packages.ubuntu.com/jammy/7zip>
           #- 'system'
           - 'share'
         alien-7zip-share-prefer: [ 'auto' ] # auto is the default for $ALIEN_7ZIP_SHARE_PREFER
