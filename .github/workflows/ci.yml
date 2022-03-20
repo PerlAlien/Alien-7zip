@@ -117,6 +117,10 @@ jobs:
         run: |
           # No MSYS2 package for 7-Zip (not p7zip)
           exit 1
+      - name: Set up 7-Zip (Chocolatey)
+        if: runner.os == 'Windows' && matrix.dist == 'strawberry' && matrix.alien-install-type == 'system'
+        run: |
+          choco install 7zip
 
       # Setup Perl
       - name: Set up perl
