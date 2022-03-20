@@ -12,26 +12,11 @@ plugin 'Probe::CommandLine' => (
   version => qr/\Q7-Zip (z) \E([0-9\.]+)/,
 ) for qw( 7z.exe 7zz );
 
-share {
-  requires 'Path::Tiny';
-  requires 'File::Copy::Recursive';
+sub can_source {
+  return 1;
+}
 
-  start_url 'https://www.7-zip.org/download.html';
-  meta->around_hook(
-    prefer => sub {
-      my $orig = shift;
-      my $build = shift;
-      my $data = $orig->($build, @_);
-
-      for my $item (@{ $data->{list} }) {
-        # insert a dot after the first 2 digits
-        $item->{version} =~ s/^(\d{2})(\d.*)$/$1.$2/;
-      }
-
-      $data;
-    },
-  );
-
+sub do_source {
   plugin Download => (
     filter  => qr/^7z(\d+).*-src\.tar\.xz$/,
     version => qr/^7z([0-9\.]+)/,
@@ -57,4 +42,32 @@ share {
       File::Copy::Recursive::fcopy($output->child($bin_name), $prefix_bin_name);
     }
   ];
+}
+
+sub _fix_share_version {
+  meta->around_hook(
+    prefer => sub {
+      my $orig = shift;
+      my $build = shift;
+      my $data = $orig->($build, @_);
+
+      for my $item (@{ $data->{list} }) {
+        # insert a dot after the first 2 digits
+        $item->{version} =~ s/^(\d{2})(\d.*)$/$1.$2/;
+      }
+
+      $data;
+    },
+  );
+}
+
+share {
+  requires 'Path::Tiny';
+  requires 'File::Copy::Recursive';
+
+  start_url 'https://www.7-zip.org/download.html';
+  _fix_share_version;
+  if( can_source() ) {
+    do_source();
+  }
 }
