@@ -69,12 +69,12 @@ jobs:
           - 'share'
         alien-7zip-share-prefer: [ 'auto' ] # auto is the default for $ALIEN_7ZIP_SHARE_PREFER
         include:
-          # Windows strawberry     | (share, toggle share-prefer)
+          # Windows strawberry     | system, (share, toggle share-prefer)
+          - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'system'                                     }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'binary' }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
-          # Windows msys2          | system, (share, toggle share-prefer)
-          - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'system'                                     }
+          # Windows msys2          | (share, toggle share-prefer)
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'binary' }
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
