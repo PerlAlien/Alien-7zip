@@ -46,6 +46,17 @@ sub do_source {
       File::Copy::Recursive::fcopy($output->child($bin_name), $prefix_bin_name);
     }
   ];
+  after build => sub {
+    my($build) = @_;
+    $build->runtime_prop->{'style'} = 'source';
+    if( $^O ne 'MSWin32' ) {
+      # on Unix-likes (linux, darwin)
+      $build->runtime_prop->{command} = '7zz';
+    } else {
+      # TODO not yet implemented
+      $build->runtime_prop->{command} = '7z.exe';
+    }
+  };
 }
 
 use Config;
