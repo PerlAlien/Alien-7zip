@@ -73,11 +73,11 @@ jobs:
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'system'                                     }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'binary' }
-          - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
+          #- { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
           # Windows msys2          | (share, toggle share-prefer)
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'binary' }
-          - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
+          #- { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
           # macOS                  | system, share
           - { perl-version: '5.34' , os: macos-11       ,                    alien-install-type: 'system'                                     }
           - { perl-version: '5.34' , os: macos-11       ,                    alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
