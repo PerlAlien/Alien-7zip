@@ -4,14 +4,6 @@ use strict;
 use warnings;
 use base qw( Alien::Base );
 use 5.008004;
-use File::Which ();
-
-# NOTE
-# - 7zip provides the '7zz' binary on Unix-likes and the '7z.exe' binary on
-#   Windows.
-# - p7zip is a fork which provides the '7z' binary on Unix-likes.
-use constant BIN_NAMES =>
-	[ '7z.exe', '7zz' ];
 
 =head1 METHODS
 
@@ -24,10 +16,8 @@ Returns the command name for running 7-Zip.
 =cut
 
 sub exe {
-	for my $bin ( @{ BIN_NAMES() } ) {
-		my $which = File::Which::which( $bin );
-		return $which if $which;
-	}
+  my($class) = @_;
+  $class->runtime_prop->{command};
 }
 
 =head1 HELPERS
