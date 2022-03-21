@@ -69,6 +69,9 @@ jobs:
           - 'share'
         alien-7zip-share-prefer: [ 'auto' ] # auto is the default for $ALIEN_7ZIP_SHARE_PREFER
         include:
+          # Linux                  | (share, toggle share-prefer)
+          - { perl-version: '5.34' , os: ubuntu-latest  ,                    alien-install-type: 'share'  , alien-7zip-share-prefer: 'binary' }
+          - { perl-version: '5.34' , os: ubuntu-latest  ,                    alien-install-type: 'share'  , alien-7zip-share-prefer: 'source' }
           # Windows strawberry     | system, (share, toggle share-prefer)
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'system'                                     }
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'  , alien-7zip-share-prefer: 'auto'   }
