@@ -4,6 +4,7 @@ use Test::Alien::Diag;
 use Alien::7zip;
 
 alien_diag 'Alien::7zip';
+diag "Alien::7zip {style} : ", Alien::7zip->runtime_prop->{'style'};
 alien_ok 'Alien::7zip';
 
 run_ok( Alien::7zip->exe )

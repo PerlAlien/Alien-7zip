@@ -227,4 +227,11 @@ share {
   } else {
     die "Unknown value for ALIEN_7ZIP_SHARE_PREFER: $ENV{ALIEN_7ZIP_SHARE_PREFER}";
   }
-}
+};
+
+sys {
+  meta->after_hook( probe => sub {
+    my($build) = @_;
+    $build->runtime_prop->{'style'} = 'system';
+  });
+};
