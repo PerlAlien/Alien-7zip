@@ -8,6 +8,6 @@ alien_ok 'Alien::7zip';
 
 run_ok( Alien::7zip->exe )
   ->success
-  ->out_like(qr/\Q7-Zip (z) \E([0-9\.]+)/,);
+  ->out_like(qr/7-Zip (?:\Q(z) \E)?([0-9\.]+)/,);
 
 done_testing;

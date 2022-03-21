@@ -12,8 +12,8 @@ use alienfile;
 # - p7zip is a fork which provides the '7z' binary on Unix-likes.
 plugin 'Probe::CommandLine' => (
   command => $_,
-  match   => qr/\Q7-Zip (z) \E([0-9\.]+)/,
-  version => qr/\Q7-Zip (z) \E([0-9\.]+)/,
+  match   => qr/7-Zip (?:\Q(z) \E)?([0-9\.]+)/,
+  version => qr/7-Zip (?:\Q(z) \E)?([0-9\.]+)/,
 ) for qw( 7z.exe 7zz );
 
 sub can_source {
