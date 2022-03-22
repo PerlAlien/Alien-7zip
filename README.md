@@ -1,20 +1,3 @@
-# METHODS
-
-## exe
-
-    Alien::7zip->exe
-
-Returns the command name for running 7-Zip.
-
-# HELPERS
-
-## 7z
-
-    %{7z}
-
-Returns '7z', '7zz', or appropriate command for
-platform.
-
 # NAME
 
 Alien::7zip - Find or build 7-Zip
@@ -36,6 +19,23 @@ detect an existing install of 7-Zip on your system.  If found it
 will use that.  If it cannot be found, the source code will be downloaded
 from the internet and it will be installed in a private share location
 for the use of other modules.
+
+# METHODS
+
+## exe
+
+    Alien::7zip->exe
+
+Returns the command name for running 7-Zip.
+
+# HELPERS
+
+## 7z
+
+    %{7z}
+
+Returns '7z', '7zz', or appropriate command for
+platform.
 
 # SEE ALSO
 
