@@ -10,6 +10,7 @@ Command line tool:
     use Env qw( @PATH );
 
     unshift @PATH, Alien::7zip->bin_dir;
+    system "@{[ Alien::7zip->exe ]}";
 
 # DESCRIPTION
 
