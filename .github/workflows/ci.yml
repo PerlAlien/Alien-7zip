@@ -6,6 +6,19 @@ on:
       - '*'
   pull_request:
 
+env:
+  PKG_NAME: 7-Zip
+  PKG_UBUNTU: 7zip
+  PKG_HOMEBREW: sevenzip
+  PKG_MSYS2_MINGW64: '' # ~
+  PKG_MSYS2_MINGW64_DEPS:  >-
+    base-devel
+    unzip
+    mingw-w64-x86_64-toolchain
+    mingw-w64-x86_64-perl
+    mingw-w64-x86_64-cmake
+  PKG_CHOCOLATEY: 7zip
+
 jobs:
   dist:
     name: Make distribution using Dist::Zilla
@@ -94,36 +107,32 @@ jobs:
         with:
           name: dist
 
-      # Setup system 7-Zip
-      - name: Setup system 7-Zip (apt)
+      # Setup system package
+      - name: Setup system ${{ env.PKG_NAME }} (apt)
         if: runner.os == 'Linux' && matrix.alien-install-type == 'system'
         run: |
-          sudo apt-get -y update && sudo apt-get install -y 7zip
-      - name: Setup system 7-Zip (homebrew)
+          sudo apt-get -y update && sudo apt-get install -y ${{ env.PKG_UBUNTU }}
+      - name: Setup system ${{ env.PKG_NAME }} (homebrew)
         if: runner.os == 'macOS' && matrix.alien-install-type == 'system'
         run: |
-          brew install sevenzip
+          brew install ${{ env.PKG_HOMEBREW }}
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         if: runner.os == 'Windows' && matrix.dist == 'msys2'
         with:
           update: true
-          install: >-
-            base-devel
-            unzip
-            mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-perl
-            mingw-w64-x86_64-cmake
-      - name: Set up 7-Zip (MSYS2/MinGW pacman)
+          install: ${{ env.PKG_MSYS2_MINGW64_DEPS }}
+      - name: Set up ${{ env.PKG_NAME }} (MSYS2/MinGW pacman)
         if: runner.os == 'Windows' && matrix.dist == 'msys2' && matrix.alien-install-type == 'system'
         shell: msys2 {0}
         run: |
           # No MSYS2 package for 7-Zip (not p7zip)
           exit 1
-      - name: Set up 7-Zip (Chocolatey)
+          pacman -S --needed --noconfirm ${{ env.PKG_MSYS2_MINGW64 }}
+      - name: Set up ${{ env.PKG_NAME }} (Chocolatey)
         if: runner.os == 'Windows' && matrix.dist == 'strawberry' && matrix.alien-install-type == 'system'
         run: |
-          choco install 7zip
+          choco install ${{ env.PKG_CHOCOLATEY }}
 
       # Setup Perl
       - name: Set up perl
