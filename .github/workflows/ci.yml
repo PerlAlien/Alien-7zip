@@ -137,12 +137,12 @@ jobs:
       # Setup Perl
       - name: Set up perl
         uses: shogo82148/actions-setup-perl@v1
-        if: matrix.os != 'windows-latest'
+        if: runner.os != 'Windows'
         with:
           perl-version: ${{ matrix.perl-version }}
       - name: Set up perl (Strawberry)
         uses: shogo82148/actions-setup-perl@v1
-        if: matrix.os == 'windows-latest' && matrix.dist == 'strawberry'
+        if: runner.os == 'Windows' && matrix.dist == 'strawberry'
         with:
           distribution: 'strawberry'
 
