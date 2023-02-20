@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+  - Fix helper to use name 'sevenzip' as previous '7z' is invalid for
+    interpolation.
 
 0.02      2022-12-27 18:11:28-05:00 America/New_York
   - Fix missing $VERSION.
