@@ -31,9 +31,9 @@ Returns the command name for running 7-Zip.
 
 # HELPERS
 
-## 7z
+## sevenzip
 
-    %{7z}
+    %{sevenzip}
 
 Returns '7z', '7zz', or appropriate command for
 platform.
