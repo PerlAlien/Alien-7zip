@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+
+0.03      2023-02-20 17:19:52-05:00 America/New_York
   - Fix helper to use name 'sevenzip' as previous '7z' is invalid for
     interpolation.
 
